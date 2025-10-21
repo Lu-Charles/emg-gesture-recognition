@@ -1,0 +1,31 @@
+# Local environments and caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.DS_Store
+
+# Credentials and local configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Downloaded recordings, model banks, and generated outputs
+/data/
+/models/
+/outputs/
+/output/
+/tmp/
+*.pt
+*.pth
+*.joblib
+*.npy
+*.npz
+
+# Journal documents are maintained outside this code repository.
+/manuscript/
