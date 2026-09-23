@@ -1,0 +1,21 @@
+tests/test_final_coverage.py:8: ResourceWarning: unclosed file <_io.TextIOWrapper name='data/public/grabmyo/cache_final_20260916/final_manifest.csv' mode='r' encoding='UTF-8'>
+  root=Path(__file__).resolve().parents[1];cls.rows=list(csv.DictReader((root/'data/public/grabmyo/cache_final_20260916/final_manifest.csv').open()));p=int(cls.rows[0]['participant']);cls.src=[i for i,r in enumerate(cls.rows) if int(r['participant'])==p and r['role']=='enrollment'];cls.score=[i for i,r in enumerate(cls.rows) if int(r['participant'])==p and int(r['session'])==2 and r['role']=='scoring'];cls.cal=next(schedules(cls.rows,p,2))['ids']
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+test_scoring_leakage_rejected (tests.test_final_coverage.FinalCoverage.test_scoring_leakage_rejected) ... ok
+test_valid_frozen_roles (tests.test_final_coverage.FinalCoverage.test_valid_frozen_roles) ... ok
+test_wrong_cohort_rejected (tests.test_final_coverage.FinalCoverage.test_wrong_cohort_rejected) ... ok
+test_base_unchanged_and_seed_reproducibility (tests.test_decisive_calibration.DecisiveCalibration.test_base_unchanged_and_seed_reproducibility) ... ok
+test_collapse_metrics (tests.test_decisive_calibration.DecisiveCalibration.test_collapse_metrics) ... ok
+test_matched_rank_recording_budget_and_gesture_balance (tests.test_decisive_calibration.DecisiveCalibration.test_matched_rank_recording_budget_and_gesture_balance) ... ok
+test_known_shared_gain_rotation (tests.test_rotation_coverage.RotationCoverage.test_known_shared_gain_rotation) ... ok
+test_proportional_templates_ambiguous (tests.test_rotation_coverage.RotationCoverage.test_proportional_templates_ambiguous) ... ok
+test_selection_invariant_to_gesture_scale (tests.test_rotation_coverage.RotationCoverage.test_selection_invariant_to_gesture_scale) ... ok
+test_budget_and_nonoverlapping_windows (tests.test_coverage_diagnostics.CoverageDiagnostics.test_budget_and_nonoverlapping_windows) ... ok
+test_collapse_has_perfect_calibrated_recall_but_low_precision (tests.test_coverage_diagnostics.CoverageDiagnostics.test_collapse_has_perfect_calibrated_recall_but_low_precision) ... ok
+test_permutation_is_distinct_from_collapse (tests.test_coverage_diagnostics.CoverageDiagnostics.test_permutation_is_distinct_from_collapse) ... ok
+test_score_leakage_and_final_participant_blocked (tests.test_coverage_diagnostics.CoverageDiagnostics.test_score_leakage_and_final_participant_blocked) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 1.588s
+
+OK

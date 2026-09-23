@@ -1,0 +1,12 @@
+{
+  "reproduce_summary.py": "f3e3c0fdaf82552306a4daf090feaacf9acf68b2a87ce1c9c6363d790ac120fc",
+  "environment_public.json": "8b9ba1a610d2a6bd68076ab76fb0d3b44e48a71dd77152fccc8e5f66e4e9c673",
+  "statistics_verification.json": "b3c5cb99bcbbac6d440ede4765cc9dba3ad00231e5a5608f7b9b0c7f65a21534",
+  "risk_tests.log": "7971d70939482ed2297ed384ae1f998582c665c7aa5220b47890db39f1abdee7",
+  "tables.json": "bb2e235001a301aff1e1cdf52b8281620e361c89ddde4682b9101d92d3f0b71d",
+  "statistics.json": "0a9642077d4b599f8aa4749111a5bdf65b4d3941986b63cb68aae35df86e223b",
+  "verifier_provenance.json": "ad9eeecbd57ca11f27bfdccff5980c8ea82cf067b519d7a5f246f0ebb391d3a7",
+  "README.md": "8dfe27fd86f21e2589a57058857ecffb2454308e7a73f79e4fc7f0a186b83911",
+  "environment_features.json": "637fc8c3c51e7d491ee4a94d9744b06b19728bc9f5f3ef1ef61eefa19973792c",
+  "protocol.json": "3545c2f35f02e056bd8a2a9ee65f10ca9f0547f58f7f557728f22b4b0cf74d9c"
+}

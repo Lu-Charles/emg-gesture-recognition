@@ -1,0 +1,3 @@
+# Analysis supplement
+
+Run `python reproduce_summary.py` with Python 3. This uses only the standard library. It reconstructs selected participant means and the primary Holm adjustment from saved summaries. It does not rerun neural training, reproduce raw-data predictions, or independently calculate t intervals. The saved statistics verification report documents a separate recheck against confusion matrices and SeNic predictions. Dataset retrieval information: GRABMyo https://physionet.org/content/grabmyo/1.1.0/ and SeNic https://github.com/BoZhuBo/SeNic/tree/a4c12f7daab28a80d557677ae8dbcef0d7871ba2 . No raw datasets or model weights are included.
