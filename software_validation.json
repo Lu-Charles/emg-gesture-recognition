@@ -1,0 +1,47 @@
+{
+  "timestamp": "2026-09-23T04:50:18.207063+00:00",
+  "scope": "Fresh virtual-environment installation, full packaged unit suite, saved-summary check and comparator CLI; not full raw-data reproduction.",
+  "environment": {
+    "python": "3.13.0 (v3.13.0:60403a5409f, Oct  7 2024, 00:37:40) [Clang 15.0.0 (clang-1500.3.9.4)]",
+    "platform": "macOS-15.6.1-arm64-arm-64bit-Mach-O",
+    "user_site_enabled": false,
+    "packages": {
+      "numpy": "2.5.2",
+      "scipy": "1.18.1",
+      "scikit-learn": "1.9.0",
+      "torch": "2.14.0",
+      "wfdb": "4.3.1",
+      "joblib": "1.6.0",
+      "matplotlib": "3.11.1"
+    }
+  },
+  "requirements": "requirements-review.txt",
+  "packaged_tests": {
+    "run": 24,
+    "passed": 23,
+    "skipped": 1,
+    "failures": 0,
+    "errors": 0,
+    "skip_reason": "Optional GRABMyo final-cache integration test; cache not distributed"
+  },
+  "canonical_protocol_tests": {
+    "run": 7,
+    "passed": 7,
+    "includes_real_manifest": true
+  },
+  "summary_check_passed": true,
+  "comparator_help_passed": true,
+  "unchanged_method_and_analysis_files": 42,
+  "preserved_snapshot_files_verified": 81,
+  "remaining": [
+    "Stable access to model and prediction artifacts",
+    "Version-controlled public release",
+    "Full raw-data reproduction"
+  ],
+  "license_update": {
+    "date": "2026-09-23T04:55:42.999803+00:00",
+    "license": "MIT",
+    "authorized_by": "Charles Lu",
+    "public_release_performed": false
+  }
+}
