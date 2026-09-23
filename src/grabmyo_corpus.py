@@ -1,4 +1,5 @@
 """Checksum-verified public corpus retrieval and bounded-memory window batches."""
+
 from __future__ import annotations
 import csv
 import hashlib
@@ -24,7 +25,11 @@ def hash_stream(path):
 
 
 def fetch_s3(root, relative, checksums):
-    if relative not in checksums or Path(relative).is_absolute() or ".." in Path(relative).parts:
+    if (
+        relative not in checksums
+        or Path(relative).is_absolute()
+        or ".." in Path(relative).parts
+    ):
         raise ValueError("Unlisted or unsafe dataset path")
     target = Path(root) / relative
     cached = target.exists()
@@ -44,18 +49,36 @@ def fetch_s3(root, relative, checksums):
                 partial = target.with_suffix(target.suffix + ".partial")
                 partial.write_bytes(data)
                 partial.replace(target)
-                attempts.append({"attempt": attempt, "status": response.status_code,
-                                 "seconds": time.perf_counter() - start})
+                attempts.append(
+                    {
+                        "attempt": attempt,
+                        "status": response.status_code,
+                        "seconds": time.perf_counter() - start,
+                    }
+                )
                 break
             except requests.RequestException as exc:
-                attempts.append({"attempt": attempt, "error": str(exc),
-                                 "seconds": time.perf_counter() - start})
+                attempts.append(
+                    {
+                        "attempt": attempt,
+                        "error": str(exc),
+                        "seconds": time.perf_counter() - start,
+                    }
+                )
                 if attempt == 3:
-                    raise RuntimeError(json.dumps({"path": relative, "attempts": attempts})) from exc
+                    raise RuntimeError(
+                        json.dumps({"path": relative, "attempts": attempts})
+                    ) from exc
                 time.sleep(attempt)
     verify_file(target, checksums[relative])
-    return {"path": relative, "url": S3_URL + relative, "sha256": checksums[relative],
-            "bytes": target.stat().st_size, "cached": cached, "attempts": attempts}
+    return {
+        "path": relative,
+        "url": S3_URL + relative,
+        "sha256": checksums[relative],
+        "bytes": target.stat().st_size,
+        "cached": cached,
+        "attempts": attempts,
+    }
 
 
 def permitted_rows(preparation, groups=("train", "development")):
@@ -63,7 +86,10 @@ def permitted_rows(preparation, groups=("train", "development")):
         raise ValueError("This development pipeline cannot access final participants")
     preparation = Path(preparation)
     summary = json.loads((preparation / "summary.json").read_text())
-    for file, key in (("trial_manifest.csv", "manifest_sha256"), ("config.json", "config_sha256")):
+    for file, key in (
+        ("trial_manifest.csv", "manifest_sha256"),
+        ("config.json", "config_sha256"),
+    ):
         if hash_stream(preparation / file) != summary[key]:
             raise ValueError("Frozen allocation artifact changed")
     with (preparation / "trial_manifest.csv").open() as f:
@@ -72,6 +98,7 @@ def permitted_rows(preparation, groups=("train", "development")):
 
 class WindowCorpus:
     """Raw trial cache with indexed 512-sample windows, no cross-trial windows."""
+
     def __init__(self, path, group):
         if group not in ("train", "development"):
             raise ValueError("Final participants are not permitted in development")
@@ -82,14 +109,22 @@ class WindowCorpus:
             self.rows = list(csv.DictReader(f))
         self.signals = np.load(self.path / f"{group}_signals.npy", mmap_mode="r")
         self.features = np.load(self.path / f"{group}_features.npy", mmap_mode="r")
-        if any(r["group"] != group for r in self.rows) or len({r["record"] for r in self.rows}) != len(self.rows):
+        if any(r["group"] != group for r in self.rows) or len(
+            {r["record"] for r in self.rows}
+        ) != len(self.rows):
             raise ValueError("Wrong or duplicate corpus identities")
-        if self.signals.shape != (len(self.rows), 16, 10240) or self.features.shape != (len(self.rows), 35, 48):
+        if self.signals.shape != (len(self.rows), 16, 10240) or self.features.shape != (
+            len(self.rows),
+            35,
+            48,
+        ):
             raise ValueError("Incomplete corpus")
         if completion["groups"][group]["trials"] != len(self.rows):
             raise ValueError("Cache completion mismatch")
         self.starts = 1024 + np.arange(35, dtype=np.int64) * 256
-        self.labels = np.asarray([int(r["class_index"]) for r in self.rows], dtype=np.int64)
+        self.labels = np.asarray(
+            [int(r["class_index"]) for r in self.rows], dtype=np.int64
+        )
 
     def window_ids(self, trial_ids):
         trial_ids = np.asarray(trial_ids, dtype=np.int64)
@@ -97,10 +132,20 @@ class WindowCorpus:
 
     def batch(self, ids, mean=None, scale=None):
         ids = np.asarray(ids, dtype=np.int64)
-        if ids.ndim != 1 or not len(ids) or ids.min() < 0 or ids.max() >= len(self.rows) * 35:
+        if (
+            ids.ndim != 1
+            or not len(ids)
+            or ids.min() < 0
+            or ids.max() >= len(self.rows) * 35
+        ):
             raise ValueError("Window index outside corpus")
         trials, positions = np.divmod(ids, 35)
-        x = np.stack([self.signals[t, :, self.starts[w]:self.starts[w] + 512] for t, w in zip(trials, positions)])
+        x = np.stack(
+            [
+                self.signals[t, :, self.starts[w] : self.starts[w] + 512]
+                for t, w in zip(trials, positions)
+            ]
+        )
         if mean is not None:
             x = ((x - mean) / scale).astype(np.float32)
         return x, self.labels[trials]
@@ -108,7 +153,9 @@ class WindowCorpus:
 
 def training_moments(corpus):
     if any(r["group"] != "train" for r in corpus.rows):
-        raise ValueError("Shared scaling may only fit representation-training participants")
+        raise ValueError(
+            "Shared scaling may only fit representation-training participants"
+        )
     total = np.zeros(16, dtype=np.float64)
     squares = np.zeros(16, dtype=np.float64)
     count = 0
@@ -130,5 +177,5 @@ def epoch_blocks(trials, seed, epoch, buffer_trials=128):
     rng = np.random.default_rng(seed + epoch)
     order = rng.permutation(trials)
     for offset in range(0, trials, buffer_trials):
-        selected = order[offset:offset + buffer_trials]
+        selected = order[offset : offset + buffer_trials]
         yield selected, rng.permutation(len(selected) * 35)
