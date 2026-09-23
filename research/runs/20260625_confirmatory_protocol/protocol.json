@@ -1,0 +1,150 @@
+{
+  "finalized_date": "2026-06-25",
+  "scope": "first independent evaluation of the empirical extension; not public preregistration",
+  "reason": "Replay and basic physics correction are established; novel source-identifiability selector failed development. Test practical coverage/preservation comparisons, not a new-algorithm claim.",
+  "no_tuning": "No choices based on final outcomes; retain all methods and all people; engineering corrections before scoring logged, scientific amendments after scoring exploratory",
+  "grabmyo": {
+    "participants": [
+      1,
+      6,
+      8,
+      9,
+      10,
+      14,
+      15,
+      16,
+      26,
+      29,
+      31,
+      32,
+      33,
+      34,
+      42
+    ],
+    "dataset": "GRABMyo1.1.0",
+    "source": "day1 all119trials; prior trained only20 training participants",
+    "calibration": "same seeded16cyclic K1/K2 schedules as development; two5secondrecords",
+    "score": "same4trials/class/day,17classes including rest",
+    "seeds": [
+      42,
+      0,
+      1
+    ],
+    "enrollment_epochs": 20,
+    "enrollment_lr": 0.001,
+    "enrollment_batch": 128,
+    "adaptation": "head only, Adam.001,64targetwindows; replay64classbalancedsource; L2coefficient1",
+    "steps": [
+      25,
+      100,
+      300
+    ],
+    "primary_steps": 100,
+    "methods": [
+      "cnn_frozen",
+      "cnn_naive",
+      "cnn_replay",
+      "cnn_l2",
+      "lda_frozen",
+      "lda_gain",
+      "lda_pooled"
+    ],
+    "strong_classical": "TDAR_RMS frozen,gain,pooled all256orderedpairs,sourceonlyactive/diverse/fixed selection",
+    "primary": "mean trial accuracy cnn_replay K2 minus cnn_frozen; seed averages within participant first",
+    "secondary": [
+      "other-active accuracy replay minus frozen on identical noncalibrated labels",
+      "K2 minus K1 replay",
+      "naive and L2 contrasts",
+      "classical controls and selections"
+    ],
+    "precision": "descriptive paired participant intervals; no significance claim from session/choice/seed counts"
+  },
+  "senic": {
+    "participants": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      15,
+      16,
+      17,
+      19,
+      20,
+      21,
+      22,
+      23,
+      26,
+      27,
+      28,
+      29
+    ],
+    "dataset": "SeNic commit a4c12f7daab28a80d557677ae8dbcef0d7871ba2",
+    "source": "session0position0reps0,1",
+    "score": "session0positions1..10rep2 all7gestures",
+    "calibration": "K1 g rep0,g rep1; K2 g rep0,h rep1; all49orderedpairs; identicalscore",
+    "methods": [
+      "frozen",
+      "pooled",
+      "cosine_rotation",
+      "cosine_gain",
+      "profile_integer",
+      "profile_fractional",
+      "gain_only"
+    ],
+    "source_selection": "maximize minimum squared separation of source log-RMS gesture ratio from its seven nonidentity integer rotations; no target access; deterministic first tie",
+    "selectors": [
+      "active",
+      "diverse",
+      "identifiable",
+      "fixed"
+    ],
+    "primary": "cosine_gain source-active pair minus cosine_gain uniform expectation of all42ordered distinct pairs; participantmean over10positions",
+    "secondary": [
+      "K2 random expectation minus K1 random expectation",
+      "noncalibrated gesture accuracy",
+      "all method and selector controls",
+      "all7gesture7trial pooled and target-only reference (higher acquisition cost)"
+    ],
+    "cost": "two full recordings; lengths differ; report seconds from files; four analyzed seconds; no fixed wall-clock claim",
+    "amplitude_gain_clip": [
+      0.5,
+      2
+    ],
+    "shift_grid": [
+      -4,
+      3.875,
+      0.125
+    ],
+    "feature": "TDAR_RMS72; rotate9channelgroups; applygain toMAV/WL/RMS only",
+    "scaler": "source-only",
+    "lda": "lsqr shrinkageauto equalpriors",
+    "angles": "not adapter or selector input; no physical-estimation claim",
+    "incomplete": "audit all expected231trials perperson and lengths>=1000 before any scoring; if missing, stop and log; never drop person based on performance",
+    "anticipated_interval_half_width_n24": 0.010266524528848998,
+    "precision_caveat": "rough forecast from only6developmentpeople, not formal power or guarantee"
+  },
+  "analysis": {
+    "unit": "participant; datasets analyzed separately",
+    "primary_tests": "two paired participant t-tests, Holm correction across the two dataset-specific primary contrasts",
+    "confidence": "95% paired participant t intervals; also10000participantbootstrap percentile intervals seed20260916; secondaryintervals descriptive",
+    "threshold": "report effect and interval; do not call improvement proven solely from point estimate",
+    "noninferiority": "none prespecified; cannot claim equivalence or safety from nonsignificance"
+  },
+  "source_hashes": {
+    "scripts/decisive_calibration.py": "53878d3ebb706e879f246dc0741b0924d8bf8dcbddf415afae1a779d23135c74",
+    "scripts/rotation_coverage.py": "739e415c8ccb51330a765fb6293627114b9f59203c15782271bb961e743738ac",
+    "src/grabmyo.py": "40cb0a653383a5fb68c0132bdab0d0f5b06368b8d777e59dbb38e1f5cecb92db",
+    "src/grabmyo_corpus.py": "6e2a5b972415238365ff0d081901cc96435d92988d62c908212744e667883141",
+    "src/emg_cnn.py": "144f340248e4c0851cd56469096bc1352691a9cacbd8b52aeb70e55042402bb5",
+    "src/senic.py": "13dd0e12f19f6d3906e83d2470772c82356b39a2f54e6f5b86d09e77dbab47ad",
+    "src/open_set_emg.py": "c5451c79860096b272f42bb02bf0474412237bf7db5694507e227e49b65ee22b"
+  }
+}
