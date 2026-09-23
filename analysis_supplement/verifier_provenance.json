@@ -1,0 +1,5 @@
+{
+  "source": "scripts/verify_coverage_statistics.py",
+  "source_sha256": "66e6097b2ad500090addcecbf227b81c6793ce8070cf50982c866650d49e3098",
+  "change": "Only source root and output directory redirected; scientific verification logic unchanged."
+}

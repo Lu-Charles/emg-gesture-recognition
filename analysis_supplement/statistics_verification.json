@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "confusion_records": 37440,
+  "primary_participants": [
+    15,
+    24
+  ],
+  "t_intervals_independently_rederived": true,
+  "holm_verified": true,
+  "no_primary_holm_significant_at_05": true
+}
