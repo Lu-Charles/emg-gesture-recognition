@@ -1,0 +1,11 @@
+{
+  "identical_trial_metrics": true,
+  "bridge_evaluations": 384,
+  "compared_windows": 913920,
+  "window_differences": 12,
+  "changed_trial_confusions": [],
+  "original_device": "cuda",
+  "original_torch": "2.8.0+cu128",
+  "followup_device": "mps",
+  "followup_torch": "2.14.0"
+}
