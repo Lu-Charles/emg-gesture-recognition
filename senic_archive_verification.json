@@ -1,0 +1,151 @@
+{
+  "passed": true,
+  "archives": 24,
+  "mode": "verify existing",
+  "checked": [
+    {
+      "path": "h2/0-4.rar",
+      "git_blob_sha1": "9cc824bf83e4c8ecc655c2ef65464a785d13bd60",
+      "sha256": "3d3448a525b6d6f5116a157b79df35e11a8443656f208d79f715d31511599699",
+      "url": "https://raw.githubusercontent.com/BoZhuBo/SeNic/a4c12f7daab28a80d557677ae8dbcef0d7871ba2/h2/0-4.rar"
+    },
+    {
+      "path": "h3/0-4.rar",
+      "git_blob_sha1": "e4c4002bf447944a1abef52e8db1bed60f26e1e5",
+      "sha256": "88abff116a9bd4a3069adecc19394a2cec6a6e0f415571054ae8a5d881f96103",
+      "url": "https://raw.githubusercontent.com/BoZhuBo/SeNic/a4c12f7daab28a80d557677ae8dbcef0d7871ba2/h3/0-4.rar"
+    },
+    {
+      "path": "h4/0-4.rar",
+      "git_blob_sha1": "27f76bdef1286f89cd67e6b75ecf56866df6dd60",
+      "sha256": "3d530e2365c096e926d1c84080a3eb67f0e74800c4b46396304299c0035776b7",
+      "url": "https://raw.githubusercontent.com/BoZhuBo/SeNic/a4c12f7daab28a80d557677ae8dbcef0d7871ba2/h4/0-4.rar"
+    },
+    {
+      "path": "h5/0-4.rar",
+      "git_blob_sha1": "aea22e8a66f2369f52ee51183b31bd0b5b16daba",
+      "sha256": "98dab21200a0d09784acf2e565e292bd6d5424ac4b25912ee4492c90709bc7fa",
+      "url": "https://raw.githubusercontent.com/BoZhuBo/SeNic/a4c12f7daab28a80d557677ae8dbcef0d7871ba2/h5/0-4.rar"
+    },
+    {
+      "path": "h6.rar",
+      "git_blob_sha1": "d1aa45b3f5fa1cd7be052a8f19a49db43b017322",
+      "sha256": "9c1733f041d5a598b90a41685189ab757a5d1ef6e57edaa27f16591e5d53478b",
+      "url": "https://raw.githubusercontent.com/BoZhuBo/SeNic/a4c12f7daab28a80d557677ae8dbcef0d7871ba2/h6.rar"
+    },
+    {
+      "path": "h7.rar",
+      "git_blob_sha1": "a287568251ee8e92ab1e9c5bf413e575725b9554",
+      "sha256": "ee6ace8180e9aa7d23e7091803f075b24c44aa98bd7f03dfc24da671335233fe",
+      "url": "https://raw.githubusercontent.com/BoZhuBo/SeNic/a4c12f7daab28a80d557677ae8dbcef0d7871ba2/h7.rar"
+    },
+    {
+      "path": "h8.rar",
+      "git_blob_sha1": "52a623a3dd8ece6327724463b24f456e6c7a5352",
+      "sha256": "60baf9b6f03f54be279eda157b3fa920e3f50aee7cb09b4e64db56f34f94bc72",
+      "url": "https://raw.githubusercontent.com/BoZhuBo/SeNic/a4c12f7daab28a80d557677ae8dbcef0d7871ba2/h8.rar"
+    },
+    {
+      "path": "h9.rar",
+      "git_blob_sha1": "e3b95c33b5406c271646c41c66df43d4df726898",
+      "sha256": "4ced2f2d2360819f2d0fc445ed6508e7203b7e125c2b0b780883ea9c1f6bc609",
+      "url": "https://raw.githubusercontent.com/BoZhuBo/SeNic/a4c12f7daab28a80d557677ae8dbcef0d7871ba2/h9.rar"
+    },
+    {
+      "path": "h10.rar",
+      "git_blob_sha1": "01e589e8476c0c60afd8da4641fec7fe2515be64",
+      "sha256": "58e38dd6f83aa276568b9366f1679e9c44f21965be5e8686901dd562baa14af1",
+      "url": "https://raw.githubusercontent.com/BoZhuBo/SeNic/a4c12f7daab28a80d557677ae8dbcef0d7871ba2/h10.rar"
+    },
+    {
+      "path": "h11.rar",
+      "git_blob_sha1": "f0dabfd9f4b3ad4cc142526cac03044b482a4c35",
+      "sha256": "ead70e8ebecb3755646701f0e78bb2764b8d9bc0e3c2ae0ec45d58d8c3fea048",
+      "url": "https://raw.githubusercontent.com/BoZhuBo/SeNic/a4c12f7daab28a80d557677ae8dbcef0d7871ba2/h11.rar"
+    },
+    {
+      "path": "h12.rar",
+      "git_blob_sha1": "65b6ccfa3b2dc68bfe97879e28e4c1d8d45f093b",
+      "sha256": "5183b051d9edc2152ba3dada1d8ca5e2a8561881477ecdc461e241af04b98032",
+      "url": "https://raw.githubusercontent.com/BoZhuBo/SeNic/a4c12f7daab28a80d557677ae8dbcef0d7871ba2/h12.rar"
+    },
+    {
+      "path": "h13.rar",
+      "git_blob_sha1": "c3f22d91feb2a9b09affb94ef647691f031620bc",
+      "sha256": "4cc0af5e59446a03077ca96eb4cb8afb42c8c433dd83eca53b1ff689e3136308",
+      "url": "https://raw.githubusercontent.com/BoZhuBo/SeNic/a4c12f7daab28a80d557677ae8dbcef0d7871ba2/h13.rar"
+    },
+    {
+      "path": "h15.rar",
+      "git_blob_sha1": "cbbeafa5419f46c1739177f9c631e72c55dd5f3f",
+      "sha256": "0c377e17ecd551b5c68064db30f6aa545797f8985381d082d1edf5adc07eb751",
+      "url": "https://raw.githubusercontent.com/BoZhuBo/SeNic/a4c12f7daab28a80d557677ae8dbcef0d7871ba2/h15.rar"
+    },
+    {
+      "path": "h16.rar",
+      "git_blob_sha1": "2f57225eb9039902a6dfc7b739d2801f92cd65f7",
+      "sha256": "71cc945fc5c01a56f7139497737f00b22623dd31b9cc33301e855f21fd34fb8b",
+      "url": "https://raw.githubusercontent.com/BoZhuBo/SeNic/a4c12f7daab28a80d557677ae8dbcef0d7871ba2/h16.rar"
+    },
+    {
+      "path": "h17.rar",
+      "git_blob_sha1": "9570e73d58d6d0fc359099dd2717b5e65045ef13",
+      "sha256": "959408fc42c5e4161c9273e49f62c3c97025a0bd13be8a2272f1172196b5be68",
+      "url": "https://raw.githubusercontent.com/BoZhuBo/SeNic/a4c12f7daab28a80d557677ae8dbcef0d7871ba2/h17.rar"
+    },
+    {
+      "path": "h19.rar",
+      "git_blob_sha1": "fd7ba6f058457936c37c89ea80207b04116ef708",
+      "sha256": "93312ebfdbada42b24db6e53dd27452388e16539bd0d9be58d646e43aa2dad04",
+      "url": "https://raw.githubusercontent.com/BoZhuBo/SeNic/a4c12f7daab28a80d557677ae8dbcef0d7871ba2/h19.rar"
+    },
+    {
+      "path": "h20.rar",
+      "git_blob_sha1": "b5c3577918a1e41df20cedebdaae9cd803a1db2c",
+      "sha256": "541755baeaa2c6bd890b2d35a29bf484a191452dd99399314e3a88466576abcf",
+      "url": "https://raw.githubusercontent.com/BoZhuBo/SeNic/a4c12f7daab28a80d557677ae8dbcef0d7871ba2/h20.rar"
+    },
+    {
+      "path": "h21.rar",
+      "git_blob_sha1": "9be4a939cb0d69c602c5a41afbae6972d939cd76",
+      "sha256": "568c3b08115a25fbcb67e839f2c490fa57a054ae36789d300a7be27939ac92fc",
+      "url": "https://raw.githubusercontent.com/BoZhuBo/SeNic/a4c12f7daab28a80d557677ae8dbcef0d7871ba2/h21.rar"
+    },
+    {
+      "path": "h22.rar",
+      "git_blob_sha1": "78ff3a140061df2e98d041ea72b9cdec34d04d0c",
+      "sha256": "0309ce15c20e7fd146f0210a16ae8677312b1eafb65af97c113ed53aa7622ad2",
+      "url": "https://raw.githubusercontent.com/BoZhuBo/SeNic/a4c12f7daab28a80d557677ae8dbcef0d7871ba2/h22.rar"
+    },
+    {
+      "path": "h23.rar",
+      "git_blob_sha1": "2136225c9fc401713d143f6801ea7e96beb358ee",
+      "sha256": "6bdd4dc8bb806e8bd5d134b4fd8d1bb384a4c1a059dc9f5488f213374196c34b",
+      "url": "https://raw.githubusercontent.com/BoZhuBo/SeNic/a4c12f7daab28a80d557677ae8dbcef0d7871ba2/h23.rar"
+    },
+    {
+      "path": "h26.rar",
+      "git_blob_sha1": "7895d36041fa810fbf3c47e38df1a23ba5edbce4",
+      "sha256": "0125cfe5dc77908e3bcc66500604fb813fa37d88cd9ac80c8ded96d4e424527b",
+      "url": "https://raw.githubusercontent.com/BoZhuBo/SeNic/a4c12f7daab28a80d557677ae8dbcef0d7871ba2/h26.rar"
+    },
+    {
+      "path": "h27.rar",
+      "git_blob_sha1": "d30b48aa85c34ab7d202b2f0404d40963129bc00",
+      "sha256": "65eecafc55be6d8d25be018ca76a5805ed6e12a12a0b1217907b79b62dc36bc0",
+      "url": "https://raw.githubusercontent.com/BoZhuBo/SeNic/a4c12f7daab28a80d557677ae8dbcef0d7871ba2/h27.rar"
+    },
+    {
+      "path": "h28.rar",
+      "git_blob_sha1": "9661a72ac04218f4214ef28f0484e90816d66444",
+      "sha256": "d4b53a5286d90c0739fd879253743a0fb2ee6a2f1774139a3b5df5f91b494544",
+      "url": "https://raw.githubusercontent.com/BoZhuBo/SeNic/a4c12f7daab28a80d557677ae8dbcef0d7871ba2/h28.rar"
+    },
+    {
+      "path": "h29.rar",
+      "git_blob_sha1": "0ec6f3e7676143c587923ba7e42a4745a07a1a8e",
+      "sha256": "beae3e58bf8ea97c74a7e800398c9eda7fbcf90b1789ed8afdc32f02469b5bf6",
+      "url": "https://raw.githubusercontent.com/BoZhuBo/SeNic/a4c12f7daab28a80d557677ae8dbcef0d7871ba2/h29.rar"
+    }
+  ]
+}
