@@ -20,8 +20,12 @@ class AlignmentComparatorTests(unittest.TestCase):
     def test_covariance_formula_and_unequal_batch_sizes(self):
         rng = np.random.default_rng(5)
         s, t = rng.normal(size=(7, 4)), rng.normal(size=(9, 4))
-        expected = np.square(np.cov(s, rowvar=False) - np.cov(t, rowvar=False)).sum() / 64
-        self.assertAlmostEqual(float(coral_loss(torch.tensor(s), torch.tensor(t))), expected, places=12)
+        expected = (
+            np.square(np.cov(s, rowvar=False) - np.cov(t, rowvar=False)).sum() / 64
+        )
+        self.assertAlmostEqual(
+            float(coral_loss(torch.tensor(s), torch.tensor(t))), expected, places=12
+        )
 
     def test_identical_covariance_translation_and_permutation(self):
         torch.manual_seed(3)
@@ -54,27 +58,31 @@ class AlignmentComparatorTests(unittest.TestCase):
         state = copy.deepcopy(base.state_dict())
         m = copy.deepcopy(base)
         sx, sy, tx = torch.randn(8, 3), torch.arange(8) % 2, torch.randn(5, 3)
-        opt = torch.optim.Adam(m.parameters(), lr=.001)
+        opt = torch.optim.Adam(m.parameters(), lr=0.001)
         source_alignment_objective(m, sx, sy, tx, 1)[0].backward()
         opt.step()
         for k, v in state.items():
             torch.testing.assert_close(base.state_dict()[k], v, rtol=0, atol=0)
-        self.assertTrue(any(not torch.equal(state[k], v) for k, v in m.state_dict().items()))
+        self.assertTrue(
+            any(not torch.equal(state[k], v) for k, v in m.state_dict().items())
+        )
 
     def test_refuses_degenerate_covariance(self):
         with self.assertRaises(ValueError):
             coral_loss(torch.zeros(1, 4), torch.zeros(3, 4))
 
     def test_whole_trial_overlap_and_final_access_rejected(self):
-        rows = [dict(participant=3, group='development', session=s, role=r)
-                for s, r in [(1, 'enrollment'), (2, 'calibration'), (2, 'scoring')]]
+        rows = [
+            dict(participant=3, group="development", session=s, role=r)
+            for s, r in [(1, "enrollment"), (2, "calibration"), (2, "scoring")]
+        ]
         validate_roles(rows, [0], [1], [2])
         with self.assertRaises(ValueError):
             validate_roles(rows, [0], [1], [1])
-        rows[2]['group'] = 'final'
+        rows[2]["group"] = "final"
         with self.assertRaises(ValueError):
             validate_roles(rows, [0], [1], [2])
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
