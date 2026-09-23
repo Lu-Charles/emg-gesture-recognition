@@ -1,63 +1,259 @@
 """Generate a results-backed manuscript and scientific figures from audited statistics."""
+
 from pathlib import Path
-import json,re
+import json
+import re
 import numpy as np
 import matplotlib
-matplotlib.use('Agg')
+
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-R=Path(__file__).resolve().parents[1];O=R/'research/expanded_study_20260916'
+
+R = Path(__file__).resolve().parents[1]
+O = R / "research/expanded_study_20260916"
+
+
 def main():
- s=json.loads((O/'statistics.json').read_text());fig=O/'figures';fig.mkdir(exist_ok=True)
- plt.rcParams.update({'font.size':10,'axes.spines.top':False,'axes.spines.right':False,'figure.dpi':160,'savefig.bbox':'tight'})
- def one(key,**conditions):return next(z for z in s[key] if all(z[k]==v for k,v in conditions.items()))
- def pct(x):return f'{100*x:.2f}'
- def ci(z):return f"{100*z['mean']:+.2f} [{100*z['ci95'][0]:+.2f}, {100*z['ci95'][1]:+.2f}]"
- def save(name):plt.savefig(fig/(name+'.png'));plt.savefig(fig/(name+'.svg'));plt.close()
- gr=s['final_cnn_replay_k2_vs_frozen']['accuracy'];go=s['final_cnn_replay_k2_vs_frozen']['other_active_accuracy'];se=s['final_selection_primary']
- # Primary contrasts: show participants, then mean and participant interval.
- f,axes=plt.subplots(1,2,figsize=(10,3.5))
- for ax,z,title in zip(axes,[gr,se],['GRABMyo: replay minus frozen','SeNic: active pair minus random pair']):
-  d=np.array(z['per_person'])*100;ax.scatter(d,np.linspace(-.18,.18,len(d)),s=24,color='#7c929d',alpha=.85);ax.errorbar(z['mean']*100,.45,xerr=[[100*(z['mean']-z['ci95'][0])],[100*(z['ci95'][1]-z['mean'])]],fmt='o',color='#0c637a',capsize=4,lw=2);ax.axvline(0,color='#ba6043',ls='--');ax.set_yticks([0,.45],['Participants','Mean + 95% CI']);ax.set_ylim(-.3,.75);ax.set_xlabel('Trial accuracy difference (percentage points)');ax.set_title(title+f"\n{z['n']} reserved participants",fontsize=11)
- f.tight_layout();save('primary_contrasts')
- f,axes=plt.subplots(1,2,figsize=(10,3.6))
- for m,label,col in [('cnn_frozen','Frozen','#303c46'),('cnn_naive','Head update','#c65d36'),('cnn_replay','Head + replay','#0c637a'),('cnn_l2','Head + L2','#9b7d35')]:
-  axes[0].plot([1,2],[100*one('final_neural',method=m,steps=0 if m=='cnn_frozen' else 100,k=k)['accuracy'] for k in [1,2]],'o-',label=label,color=col)
- for m,label,col in [('frozen','Frozen','#303c46'),('pooled','Pooled LDA','#c65d36'),('cosine_rotation','Rotation only','#9b7d35'),('cosine_gain','Rotation + gain','#0c637a'),('profile_fractional','Profiled rotation + gain','#776096')]:
-  axes[1].plot([1,2],[100*one('final_rotation',method=m,k=k)['accuracy'] for k in [1,2]],'o-',label=label,color=col)
- for ax,title in zip(axes,['GRABMyo: two 5-second recordings','SeNic: two complete recordings']):ax.set_xticks([1,2],['One gesture','Two gestures']);ax.set_ylabel('Trial accuracy (%)');ax.set_title(title,fontsize=11);ax.legend(fontsize=8,loc='best');ax.grid(axis='y',alpha=.2)
- f.tight_layout();save('coverage_by_method')
- f,ax=plt.subplots(figsize=(8.4,3.5));xx=np.arange(4);w=.25
- methods=['cnn_frozen','cnn_naive','cnn_replay','cnn_l2']
- for j,(metric,label,color) in enumerate([('calibrated_recall','Calibrated gestures','#b7c8ce'),('other_active_accuracy','Other active gestures','#0c637a'),('accuracy','All 17 classes','#d99558')]):
-  ax.bar(xx+(j-1)*w,[100*one('final_neural',method=m,steps=0 if m=='cnn_frozen' else 100,k=2)[metric] for m in methods],w,label=label,color=color)
- ax.set_xticks(xx,['Frozen','Head update','Head + replay','Head + L2']);ax.set_ylabel('Trial accuracy / recall (%)');ax.set_ylim(0,105);ax.legend(ncol=3,fontsize=8,loc='upper center');ax.set_title('GRABMyo held-out cohort: calibrated success versus vocabulary retention',fontsize=11);f.tight_layout();save('vocabulary_retention')
- f,ax=plt.subplots(figsize=(8.4,3.4));labels=['Random pairs','High activity','Cosine diversity','Identifiability','Fixed pair'];xx=np.arange(5)
- for cohort,offset,color,n in [('development',-.16,'#9bafb8',6),('final',.16,'#0c637a',24)]:
-  values=[one(cohort+'_rotation',method='cosine_gain',k=2)['accuracy']]+[one(cohort+'_rotation_selection',method='cosine_gain',selector=r)['accuracy'] for r in ['active','diverse','identifiable','fixed']];ax.bar(xx+offset,np.array(values)*100,.3,label=f'{cohort.capitalize()} (n={n})',color=color)
- ax.set_xticks(xx,labels);ax.set_ylabel('Trial accuracy (%)');ax.set_ylim(0,100);ax.legend();ax.set_title('SeNic: selection gains weakened in independent evaluation',fontsize=11);f.tight_layout();save('selection_replication')
- # Tables are created from the same immutable participant summaries as the figures.
- nt='| Method | One gesture | Two gestures | Other gestures, K2 | Calibration recall, K2 | Macro F1, K2 |\n|---|---:|---:|---:|---:|---:|\n'
- for m,label in [('cnn_frozen','Frozen CNN'),('cnn_naive','Head update'),('cnn_replay','Head + replay'),('cnn_l2','Head + L2')]:
-  a=one('final_neural',method=m,steps=0 if m=='cnn_frozen' else 100,k=1);b=one('final_neural',method=m,steps=0 if m=='cnn_frozen' else 100,k=2);nt+=f"| {label} | {pct(a['accuracy'])} | {pct(b['accuracy'])} | {pct(b['other_active_accuracy'])} | {pct(b['calibrated_recall'])} | {pct(b['macro_f1'])} |\n"
- ct='| Method | One gesture | Two gestures | High-activity pair, K2 |\n|---|---:|---:|---:|\n'
- for m,label in [('tdar_frozen','Frozen TDAR+RMS LDA'),('amplitude_gain48','Amplitude gain + LDA'),('tdar_gain16','TDAR gain + LDA'),('tdar_pooled','TDAR pooled LDA')]:
-  a=one('final_classical',method=m,k=1);b=one('final_classical',method=m,k=2);h=one('final_classical_selection',method=m,selector='active');ct+=f"| {label} | {pct(a['accuracy'])} | {pct(b['accuracy'])} | {pct(h['accuracy'])} |\n"
- rt='| SeNic method | One gesture | Two random gestures | High-activity pair |\n|---|---:|---:|---:|\n'
- for m,label in [('frozen','Frozen'),('pooled','Source + calibration LDA'),('gain_only','Gain only'),('cosine_rotation','Cosine rotation'),('cosine_gain','Cosine rotation + gain'),('profile_integer','Gain-profiled integer rotation'),('profile_fractional','Gain-profiled fractional rotation')]:
-  a=one('final_rotation',method=m,k=1);b=one('final_rotation',method=m,k=2);h=one('final_rotation_selection',method=m,selector='active');rt+=f"| {label} | {pct(a['accuracy'])} | {pct(b['accuracy'])} | {pct(h['accuracy'])} |\n"
- st='| Dataset-specific primary contrast | Difference and 95% CI (pp) | Holm-adjusted p |\n|---|---:|---:|\n'
- for label,z,key in [('GRABMyo: K2 replay - frozen',gr,'final_cnn_replay_k2_vs_frozen'),('SeNic: activity - random pair',se,'final_selection_primary')]:st+=f"| {label} | {ci(z)} | {s['primary_tests'][key]['holm_p']:.4f} |\n"
- frozen=one('final_neural',method='cnn_frozen',steps=0,k=2);naive=one('final_neural',method='cnn_naive',steps=100,k=2);replay=one('final_neural',method='cnn_replay',steps=100,k=2)
- cos=one('final_rotation',method='cosine_gain',k=2);act=one('final_rotation_selection',method='cosine_gain',selector='active');ref=one('final_rotation_reference',method='target7');coverage=s['final_rotation_coverage_contrast'];p7=one('final_rotation_reference',method='pooled7')
- full='| Update | Steps | One gesture | Two gestures | Other gestures, K2 |\n|---|---:|---:|---:|---:|\n'
- for m in ['full_naive','full_replay']:
-  for steps in [25,100]:
-   a=one('development_full_network',method=m,steps=steps,k=1);b=one('development_full_network',method=m,steps=steps,k=2);full+=f"| {m.replace('_',' ')} | {steps} | {pct(a['accuracy'])} | {pct(b['accuracy'])} | {pct(b['other_active_accuracy'])} |\n"
- headsteps='| Update | Steps | One gesture | Two gestures |\n|---|---:|---:|---:|\n'
- for m in ['cnn_naive','cnn_replay','cnn_l2']:
-  for steps in [25,100,300]:
-   a=one('final_neural',method=m,steps=steps,k=1);b=one('final_neural',method=m,steps=steps,k=2);headsteps+=f"| {m.replace('cnn_','')} | {steps} | {pct(a['accuracy'])} | {pct(b['accuracy'])} |\n"
- text=f'''# Brief EMG Calibration Does Not Guarantee Vocabulary Preservation
+    s = json.loads((O / "statistics.json").read_text())
+    fig = O / "figures"
+    fig.mkdir(exist_ok=True)
+    plt.rcParams.update(
+        {
+            "font.size": 10,
+            "axes.spines.top": False,
+            "axes.spines.right": False,
+            "figure.dpi": 160,
+            "savefig.bbox": "tight",
+        }
+    )
+
+    def one(key, **conditions):
+        return next(z for z in s[key] if all(z[k] == v for k, v in conditions.items()))
+
+    def pct(x):
+        return f"{100*x:.2f}"
+
+    def ci(z):
+        return (
+            f"{100*z['mean']:+.2f} [{100*z['ci95'][0]:+.2f}, {100*z['ci95'][1]:+.2f}]"
+        )
+
+    def save(name):
+        plt.savefig(fig / (name + ".png"))
+        plt.savefig(fig / (name + ".svg"))
+        plt.close()
+
+    gr = s["final_cnn_replay_k2_vs_frozen"]["accuracy"]
+    go = s["final_cnn_replay_k2_vs_frozen"]["other_active_accuracy"]
+    se = s["final_selection_primary"]
+    # Primary contrasts: show participants, then mean and participant interval.
+    f, axes = plt.subplots(1, 2, figsize=(10, 3.5))
+    for ax, z, title in zip(
+        axes,
+        [gr, se],
+        ["GRABMyo: replay minus frozen", "SeNic: active pair minus random pair"],
+    ):
+        d = np.array(z["per_person"]) * 100
+        ax.scatter(
+            d, np.linspace(-0.18, 0.18, len(d)), s=24, color="#7c929d", alpha=0.85
+        )
+        ax.errorbar(
+            z["mean"] * 100,
+            0.45,
+            xerr=[
+                [100 * (z["mean"] - z["ci95"][0])],
+                [100 * (z["ci95"][1] - z["mean"])],
+            ],
+            fmt="o",
+            color="#0c637a",
+            capsize=4,
+            lw=2,
+        )
+        ax.axvline(0, color="#ba6043", ls="--")
+        ax.set_yticks([0, 0.45], ["Participants", "Mean + 95% CI"])
+        ax.set_ylim(-0.3, 0.75)
+        ax.set_xlabel("Trial accuracy difference (percentage points)")
+        ax.set_title(title + f"\n{z['n']} reserved participants", fontsize=11)
+    f.tight_layout()
+    save("primary_contrasts")
+    f, axes = plt.subplots(1, 2, figsize=(10, 3.6))
+    for m, label, col in [
+        ("cnn_frozen", "Frozen", "#303c46"),
+        ("cnn_naive", "Head update", "#c65d36"),
+        ("cnn_replay", "Head + replay", "#0c637a"),
+        ("cnn_l2", "Head + L2", "#9b7d35"),
+    ]:
+        axes[0].plot(
+            [1, 2],
+            [
+                100
+                * one(
+                    "final_neural", method=m, steps=0 if m == "cnn_frozen" else 100, k=k
+                )["accuracy"]
+                for k in [1, 2]
+            ],
+            "o-",
+            label=label,
+            color=col,
+        )
+    for m, label, col in [
+        ("frozen", "Frozen", "#303c46"),
+        ("pooled", "Pooled LDA", "#c65d36"),
+        ("cosine_rotation", "Rotation only", "#9b7d35"),
+        ("cosine_gain", "Rotation + gain", "#0c637a"),
+        ("profile_fractional", "Profiled rotation + gain", "#776096"),
+    ]:
+        axes[1].plot(
+            [1, 2],
+            [100 * one("final_rotation", method=m, k=k)["accuracy"] for k in [1, 2]],
+            "o-",
+            label=label,
+            color=col,
+        )
+    for ax, title in zip(
+        axes, ["GRABMyo: two 5-second recordings", "SeNic: two complete recordings"]
+    ):
+        ax.set_xticks([1, 2], ["One gesture", "Two gestures"])
+        ax.set_ylabel("Trial accuracy (%)")
+        ax.set_title(title, fontsize=11)
+        ax.legend(fontsize=8, loc="best")
+        ax.grid(axis="y", alpha=0.2)
+    f.tight_layout()
+    save("coverage_by_method")
+    f, ax = plt.subplots(figsize=(8.4, 3.5))
+    xx = np.arange(4)
+    w = 0.25
+    methods = ["cnn_frozen", "cnn_naive", "cnn_replay", "cnn_l2"]
+    for j, (metric, label, color) in enumerate(
+        [
+            ("calibrated_recall", "Calibrated gestures", "#b7c8ce"),
+            ("other_active_accuracy", "Other active gestures", "#0c637a"),
+            ("accuracy", "All 17 classes", "#d99558"),
+        ]
+    ):
+        ax.bar(
+            xx + (j - 1) * w,
+            [
+                100
+                * one(
+                    "final_neural", method=m, steps=0 if m == "cnn_frozen" else 100, k=2
+                )[metric]
+                for m in methods
+            ],
+            w,
+            label=label,
+            color=color,
+        )
+    ax.set_xticks(xx, ["Frozen", "Head update", "Head + replay", "Head + L2"])
+    ax.set_ylabel("Trial accuracy / recall (%)")
+    ax.set_ylim(0, 105)
+    ax.legend(ncol=3, fontsize=8, loc="upper center")
+    ax.set_title(
+        "GRABMyo held-out cohort: calibrated success versus vocabulary retention",
+        fontsize=11,
+    )
+    f.tight_layout()
+    save("vocabulary_retention")
+    f, ax = plt.subplots(figsize=(8.4, 3.4))
+    labels = [
+        "Random pairs",
+        "High activity",
+        "Cosine diversity",
+        "Identifiability",
+        "Fixed pair",
+    ]
+    xx = np.arange(5)
+    for cohort, offset, color, n in [
+        ("development", -0.16, "#9bafb8", 6),
+        ("final", 0.16, "#0c637a", 24),
+    ]:
+        values = [one(cohort + "_rotation", method="cosine_gain", k=2)["accuracy"]] + [
+            one(cohort + "_rotation_selection", method="cosine_gain", selector=r)[
+                "accuracy"
+            ]
+            for r in ["active", "diverse", "identifiable", "fixed"]
+        ]
+        ax.bar(
+            xx + offset,
+            np.array(values) * 100,
+            0.3,
+            label=f"{cohort.capitalize()} (n={n})",
+            color=color,
+        )
+    ax.set_xticks(xx, labels)
+    ax.set_ylabel("Trial accuracy (%)")
+    ax.set_ylim(0, 100)
+    ax.legend()
+    ax.set_title(
+        "SeNic: selection gains weakened in independent evaluation", fontsize=11
+    )
+    f.tight_layout()
+    save("selection_replication")
+    # Tables are created from the same immutable participant summaries as the figures.
+    nt = "| Method | One gesture | Two gestures | Other gestures, K2 | Calibration recall, K2 | Macro F1, K2 |\n|---|---:|---:|---:|---:|---:|\n"
+    for m, label in [
+        ("cnn_frozen", "Frozen CNN"),
+        ("cnn_naive", "Head update"),
+        ("cnn_replay", "Head + replay"),
+        ("cnn_l2", "Head + L2"),
+    ]:
+        a = one("final_neural", method=m, steps=0 if m == "cnn_frozen" else 100, k=1)
+        b = one("final_neural", method=m, steps=0 if m == "cnn_frozen" else 100, k=2)
+        nt += f"| {label} | {pct(a['accuracy'])} | {pct(b['accuracy'])} | {pct(b['other_active_accuracy'])} | {pct(b['calibrated_recall'])} | {pct(b['macro_f1'])} |\n"
+    ct = "| Method | One gesture | Two gestures | High-activity pair, K2 |\n|---|---:|---:|---:|\n"
+    for m, label in [
+        ("tdar_frozen", "Frozen TDAR+RMS LDA"),
+        ("amplitude_gain48", "Amplitude gain + LDA"),
+        ("tdar_gain16", "TDAR gain + LDA"),
+        ("tdar_pooled", "TDAR pooled LDA"),
+    ]:
+        a = one("final_classical", method=m, k=1)
+        b = one("final_classical", method=m, k=2)
+        h = one("final_classical_selection", method=m, selector="active")
+        ct += f"| {label} | {pct(a['accuracy'])} | {pct(b['accuracy'])} | {pct(h['accuracy'])} |\n"
+    rt = "| SeNic method | One gesture | Two random gestures | High-activity pair |\n|---|---:|---:|---:|\n"
+    for m, label in [
+        ("frozen", "Frozen"),
+        ("pooled", "Source + calibration LDA"),
+        ("gain_only", "Gain only"),
+        ("cosine_rotation", "Cosine rotation"),
+        ("cosine_gain", "Cosine rotation + gain"),
+        ("profile_integer", "Gain-profiled integer rotation"),
+        ("profile_fractional", "Gain-profiled fractional rotation"),
+    ]:
+        a = one("final_rotation", method=m, k=1)
+        b = one("final_rotation", method=m, k=2)
+        h = one("final_rotation_selection", method=m, selector="active")
+        rt += f"| {label} | {pct(a['accuracy'])} | {pct(b['accuracy'])} | {pct(h['accuracy'])} |\n"
+    st = "| Dataset-specific primary contrast | Difference and 95% CI (pp) | Holm-adjusted p |\n|---|---:|---:|\n"
+    for label, z, key in [
+        ("GRABMyo: K2 replay - frozen", gr, "final_cnn_replay_k2_vs_frozen"),
+        ("SeNic: activity - random pair", se, "final_selection_primary"),
+    ]:
+        st += f"| {label} | {ci(z)} | {s['primary_tests'][key]['holm_p']:.4f} |\n"
+    frozen = one("final_neural", method="cnn_frozen", steps=0, k=2)
+    naive = one("final_neural", method="cnn_naive", steps=100, k=2)
+    replay = one("final_neural", method="cnn_replay", steps=100, k=2)
+    cos = one("final_rotation", method="cosine_gain", k=2)
+    act = one("final_rotation_selection", method="cosine_gain", selector="active")
+    ref = one("final_rotation_reference", method="target7")
+    coverage = s["final_rotation_coverage_contrast"]
+    p7 = one("final_rotation_reference", method="pooled7")
+    full = "| Update | Steps | One gesture | Two gestures | Other gestures, K2 |\n|---|---:|---:|---:|---:|\n"
+    for m in ["full_naive", "full_replay"]:
+        for steps in [25, 100]:
+            a = one("development_full_network", method=m, steps=steps, k=1)
+            b = one("development_full_network", method=m, steps=steps, k=2)
+            full += f"| {m.replace('_',' ')} | {steps} | {pct(a['accuracy'])} | {pct(b['accuracy'])} | {pct(b['other_active_accuracy'])} |\n"
+    headsteps = (
+        "| Update | Steps | One gesture | Two gestures |\n|---|---:|---:|---:|\n"
+    )
+    for m in ["cnn_naive", "cnn_replay", "cnn_l2"]:
+        for steps in [25, 100, 300]:
+            a = one("final_neural", method=m, steps=steps, k=1)
+            b = one("final_neural", method=m, steps=steps, k=2)
+            headsteps += f"| {m.replace('cnn_','')} | {steps} | {pct(a['accuracy'])} | {pct(b['accuracy'])} |\n"
+    text = f"""# Brief EMG Calibration Does Not Guarantee Vocabulary Preservation
 ## An evaluation across session and electrode-position changes
 Charles Lu | Research manuscript draft
 
@@ -229,13 +425,41 @@ All5355GRABMyo final trial files have checksum and manual-decoder comparison rec
 [8] J. Yang, M. Soh, V. Lieu, D. J. Weber, Z. Erickson. EMGBench: Benchmarking Out-of-Distribution Generalization and Adaptation for Electromyography. NeurIPS Datasets and Benchmarks,2024. https://papers.neurips.cc/paper_files/paper/2024/file/59fe60482e2e5faf557c37d121994663-Paper-Datasets_and_Benchmarks_Track.pdf
 
 [9] T. Pollard et al. PhysioNet as a global platform for biomedical research. Nature Health1,792-795,2026. https://doi.org/10.1038/s44360-026-00096-z
-'''
- text=re.sub(r'(?<=\d)(?=(?:steps|people|epochs|windows|trials|seconds|examples|channels|participants|records|cases|new|later|active|other|complete|target|ordered|final|source|raw|saved|separate|class|integer|shared|positive|negative|recording|gesture|development|scientific|different|independent|frozen|checks|Hz|MB|ms|layers|evaluated|representation|convolutional|paired|retained|repeat|primary|calibration|metric|per|point|equal|channel|float|experiment|Adam|years|problems|model|reference|seeds|outputs|first|second|third|year|recordings|epochs))', ' ',text)
- text=re.sub(r'(?<=[0-9]),(?=[A-Za-z0-9])',', ',text)
- text=re.sub(r'\b(version|Position|position|repetition|rank|sample|samples|seed|day|session|Session|Figure|Table|Appendix|coefficient|size|rate|widths|strides|layers|rep|from)(?=\d)',r'\1 ',text)
- text=re.sub(r'\b(primary|all|across|from|with|on|in|for|of|the|and|at|over|approximately|retained|contains|supplies|has|uses|provided|only|each|every|to|by)(?=\d)',r'\1 ',text)
- text=re.sub(r',(?=\w)',', ',text)
- (O/'Expanded_EMG_Manuscript.md').write_text(text)
- (O/'tables.json').write_text(json.dumps(dict(neural=nt,classical=ct,rotation=rt,primary=st,full_network=full,step_sensitivity=headsteps),indent=2)+'\n')
- print('Manuscript words',len(text.split()))
-if __name__=='__main__':main()
+"""
+    text = re.sub(
+        r"(?<=\d)(?=(?:steps|people|epochs|windows|trials|seconds|examples|channels|participants|records|cases|new|later|active|other|complete|target|ordered|final|source|raw|saved|separate|class|integer|shared|positive|negative|recording|gesture|development|scientific|different|independent|frozen|checks|Hz|MB|ms|layers|evaluated|representation|convolutional|paired|retained|repeat|primary|calibration|metric|per|point|equal|channel|float|experiment|Adam|years|problems|model|reference|seeds|outputs|first|second|third|year|recordings|epochs))",
+        " ",
+        text,
+    )
+    text = re.sub(r"(?<=[0-9]),(?=[A-Za-z0-9])", ", ", text)
+    text = re.sub(
+        r"\b(version|Position|position|repetition|rank|sample|samples|seed|day|session|Session|Figure|Table|Appendix|coefficient|size|rate|widths|strides|layers|rep|from)(?=\d)",
+        r"\1 ",
+        text,
+    )
+    text = re.sub(
+        r"\b(primary|all|across|from|with|on|in|for|of|the|and|at|over|approximately|retained|contains|supplies|has|uses|provided|only|each|every|to|by)(?=\d)",
+        r"\1 ",
+        text,
+    )
+    text = re.sub(r",(?=\w)", ", ", text)
+    (O / "Expanded_EMG_Manuscript.md").write_text(text)
+    (O / "tables.json").write_text(
+        json.dumps(
+            dict(
+                neural=nt,
+                classical=ct,
+                rotation=rt,
+                primary=st,
+                full_network=full,
+                step_sensitivity=headsteps,
+            ),
+            indent=2,
+        )
+        + "\n"
+    )
+    print("Manuscript words", len(text.split()))
+
+
+if __name__ == "__main__":
+    main()
