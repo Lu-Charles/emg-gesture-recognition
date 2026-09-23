@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "Cite this software and the accompanying manuscript when using the analyses."
+type: software
+title: "Gesture Coverage and Vocabulary Retention During Brief EMG Calibration"
+authors:
+  - family-names: Lu
+    given-names: Charles
+version: "0.1.0"
+abstract: "Research code for evaluating calibration gesture coverage and vocabulary retention in EMG recognition."
+license: MIT
+repository-code: "https://github.com/Lu-Charles/emg-gesture-recognition"
