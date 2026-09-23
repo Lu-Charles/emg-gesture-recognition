@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "records": 1664,
+  "cases": 128,
+  "trial_votes": 113152,
+  "stored_window_predictions": 3960320,
+  "raw_replayed_checkpoints": 208,
+  "raw_replayed_windows": 495040,
+  "device": "cpu",
+  "raw_mode": "sample",
+  "final_access": 0,
+  "verifier_sha256": "e84df38167f6d0af0ca2e486f79f977f6f4fc24e6611c34672035705f6a81910"
+}
