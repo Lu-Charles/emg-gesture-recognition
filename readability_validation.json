@@ -1,0 +1,23 @@
+{
+  "scope": "Readability regression; saved summaries and synthetic inputs only.",
+  "equivalent_syntax_after_local_renames_and_helper_inlining": 48,
+  "exact_head_checkpoint_pairs": 12,
+  "exact_full_network_checkpoint_pairs": 12,
+  "exact_rotation_cases": 6,
+  "full_saved_statistics_byte_identical": true,
+  "both_comparator_summaries_and_tables_byte_identical": true,
+  "preserved_snapshot_files_verified": 254,
+  "timestamp": "2026-09-23T04:36:49.316328+00:00",
+  "changed_python_files": 47,
+  "python_files_reviewed": 48,
+  "semicolon_statement_separators": {
+    "before": 863,
+    "after": 0
+  },
+  "canonical_risk_tests_passed": 31,
+  "feature_tests_passed": 6,
+  "feature_environment": ".venv-open-set (librosa 0.11.0)",
+  "scientific_environment": ".venv-public",
+  "original_summary_check": true,
+  "packaged_risk_tests_passed": 17
+}
