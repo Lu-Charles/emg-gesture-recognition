@@ -33,7 +33,7 @@ def main():
     for method,label in [('spatial_only','Spatial'),('spatial_gain','Spatial + gain')]:
         spread=c['search_seed_ranges'][method]
         lines.append(f"{label} has a mean per-case range across the three search seeds of {pc(spread['mean_range'])} percentage points, with a maximum of {pc(spread['max_range'])}; {spread['range_over10pp']}/{spread['cases']} cases span more than ten points. All seeds are reported without selecting the best result.")
-    lines.extend(['','![Implementation controls](research/runs/20260907_csl_components_confirmatory/implementation_controls.png)','','Figure 2. Matched implementation contrasts and the supplementary search-seed results. Points in panels A–B are participant means; panel C is restricted to session pair 1→2.',''])
+    lines.extend(['','![Implementation controls](runs/20260907_csl_components_confirmatory/implementation_controls.png)','','Figure 2. Matched implementation contrasts and the supplementary search-seed results. Points in panels A–B are participant means; panel C is restricted to session pair 1→2.',''])
     section='\n'.join(lines)
     draft=R/'CSL_PAPER_DRAFT.md';text=draft.read_text();assert 'CONTROL_RESULTS_PENDING_VERIFIED_COMPLETION' in text
     text=text.replace('CONTROL_RESULTS_PENDING_VERIFIED_COMPLETION',section)
