@@ -1,12 +1,17 @@
 {
-  "reproduce_summary.py": "b9b37952c1e16ab6687ac3bbf59fd83a4c164ce4d94fe0eb5c7439048e17c5e3",
-  "environment_public.json": "8b9ba1a610d2a6bd68076ab76fb0d3b44e48a71dd77152fccc8e5f66e4e9c673",
-  "statistics_verification.json": "b3c5cb99bcbbac6d440ede4765cc9dba3ad00231e5a5608f7b9b0c7f65a21534",
-  "risk_tests.log": "7971d70939482ed2297ed384ae1f998582c665c7aa5220b47890db39f1abdee7",
-  "tables.json": "bb2e235001a301aff1e1cdf52b8281620e361c89ddde4682b9101d92d3f0b71d",
-  "statistics.json": "0a9642077d4b599f8aa4749111a5bdf65b4d3941986b63cb68aae35df86e223b",
-  "verifier_provenance.json": "ad9eeecbd57ca11f27bfdccff5980c8ea82cf067b519d7a5f246f0ebb391d3a7",
-  "README.md": "8dfe27fd86f21e2589a57058857ecffb2454308e7a73f79e4fc7f0a186b83911",
+  "README.md": "7d84b9f7a08da3bea2d4772c3aa6a9fb1a45d1f547c6fd4b65bace02a30c794e",
+  "comparator/COMPARISON.md": "bd8fa51b38b204151790a1da3e84e9d0519b460a96b73317365122a60ecf0b87",
+  "comparator/bridge_verification.json": "ee494f965db2f9bdc90414506babd45fb43cce30a9db5817b30b9918dd45af16",
+  "comparator/combined_summary.json": "38d7ef1a518e909ce40496daf328eefaf32f99f9c3305d57e4104d3c9e5dd122",
+  "comparator/finite_check_equivalence.json": "9aeb9e3249dae19fefcb77fa3a183556ddb15b272cb180f7186ceda0655ba5c0",
   "environment_features.json": "637fc8c3c51e7d491ee4a94d9744b06b19728bc9f5f3ef1ef61eefa19973792c",
-  "protocol.json": "3545c2f35f02e056bd8a2a9ee65f10ca9f0547f58f7f557728f22b4b0cf74d9c"
+  "environment_public.json": "8b9ba1a610d2a6bd68076ab76fb0d3b44e48a71dd77152fccc8e5f66e4e9c673",
+  "protocol.json": "3545c2f35f02e056bd8a2a9ee65f10ca9f0547f58f7f557728f22b4b0cf74d9c",
+  "reproduce_summary.py": "b9b37952c1e16ab6687ac3bbf59fd83a4c164ce4d94fe0eb5c7439048e17c5e3",
+  "risk_tests.log": "fb356e4460b76b235087cababd0b62efab962d2c6fdc974eec78f3df9e3902d5",
+  "software_validation.json": "86f215533c7bb5e72828011fc1bf3ede6a2f5b49a507ea6b969383d47bd5faad",
+  "statistics.json": "0a9642077d4b599f8aa4749111a5bdf65b4d3941986b63cb68aae35df86e223b",
+  "statistics_verification.json": "b3c5cb99bcbbac6d440ede4765cc9dba3ad00231e5a5608f7b9b0c7f65a21534",
+  "tables.json": "bb2e235001a301aff1e1cdf52b8281620e361c89ddde4682b9101d92d3f0b71d",
+  "verifier_provenance.json": "3d146c7a1e627a476770f163369e492849699c216aa0d3c8199f772470ef90fc"
 }

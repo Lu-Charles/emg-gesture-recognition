@@ -49,7 +49,7 @@ Results below average all 26 possible calibration gestures equally on the same p
 
 The no-adaptation calibration-class and other-class averages also equal its overall accuracy because all 26 class choices are included and each class has nine scoring trials. These are class-conditioned held-out results, not scores on the fitted calibration trial.
 
-![Distribution across calibration choices](research/runs/20260907_csl_single_gesture_v1/one_gesture_results.png)
+![Distribution across calibration choices](runs/20260907_csl_single_gesture_v1/one_gesture_results.png)
 
 SAL+baseline's average change from no adaptation is {100*(summary['sal_lbn']['trial_accuracy']-baseline):+.2f} percentage points. Its range across choices is {100*summary['sal_lbn']['trial_min']:.2f}% to {100*summary['sal_lbn']['trial_max']:.2f}%. That range describes sensitivity; the best choice is not a deployable selection rule. Classifier fine-tuning can fit the provided class while degrading predictions on unseen classes. Freezing BN running statistics is included to check that ordinary target-only normalization updates are not the sole explanation.
 

@@ -1,0 +1,12 @@
+{
+  "code_revision": "dbc904e56ee21c73055eb5092e0c5b649b53c834",
+  "scope": "Focused packaged-code validation, not raw-data training or a full experimental reproduction.",
+  "tests_run": 24,
+  "passed": 23,
+  "skipped": 1,
+  "failures": 0,
+  "errors": 0,
+  "skip_reason": "Optional integration check requires the GRABMyo final cache",
+  "log": "risk_tests.log",
+  "log_sha256": "fb356e4460b76b235087cababd0b62efab962d2c6fdc974eec78f3df9e3902d5"
+}

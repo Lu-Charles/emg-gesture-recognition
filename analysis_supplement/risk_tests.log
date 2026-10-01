@@ -1,21 +1,29 @@
-tests/test_final_coverage.py:8: ResourceWarning: unclosed file <_io.TextIOWrapper name='data/public/grabmyo/cache_final_20260916/final_manifest.csv' mode='r' encoding='UTF-8'>
-  root=Path(__file__).resolve().parents[1];cls.rows=list(csv.DictReader((root/'data/public/grabmyo/cache_final_20260916/final_manifest.csv').open()));p=int(cls.rows[0]['participant']);cls.src=[i for i,r in enumerate(cls.rows) if int(r['participant'])==p and r['role']=='enrollment'];cls.score=[i for i,r in enumerate(cls.rows) if int(r['participant'])==p and int(r['session'])==2 and r['role']=='scoring'];cls.cal=next(schedules(cls.rows,p,2))['ids']
-ResourceWarning: Enable tracemalloc to get the object allocation traceback
-test_scoring_leakage_rejected (tests.test_final_coverage.FinalCoverage.test_scoring_leakage_rejected) ... ok
-test_valid_frozen_roles (tests.test_final_coverage.FinalCoverage.test_valid_frozen_roles) ... ok
-test_wrong_cohort_rejected (tests.test_final_coverage.FinalCoverage.test_wrong_cohort_rejected) ... ok
-test_base_unchanged_and_seed_reproducibility (tests.test_decisive_calibration.DecisiveCalibration.test_base_unchanged_and_seed_reproducibility) ... ok
-test_collapse_metrics (tests.test_decisive_calibration.DecisiveCalibration.test_collapse_metrics) ... ok
-test_matched_rank_recording_budget_and_gesture_balance (tests.test_decisive_calibration.DecisiveCalibration.test_matched_rank_recording_budget_and_gesture_balance) ... ok
-test_known_shared_gain_rotation (tests.test_rotation_coverage.RotationCoverage.test_known_shared_gain_rotation) ... ok
-test_proportional_templates_ambiguous (tests.test_rotation_coverage.RotationCoverage.test_proportional_templates_ambiguous) ... ok
-test_selection_invariant_to_gesture_scale (tests.test_rotation_coverage.RotationCoverage.test_selection_invariant_to_gesture_scale) ... ok
-test_budget_and_nonoverlapping_windows (tests.test_coverage_diagnostics.CoverageDiagnostics.test_budget_and_nonoverlapping_windows) ... ok
-test_collapse_has_perfect_calibrated_recall_but_low_precision (tests.test_coverage_diagnostics.CoverageDiagnostics.test_collapse_has_perfect_calibrated_recall_but_low_precision) ... ok
-test_permutation_is_distinct_from_collapse (tests.test_coverage_diagnostics.CoverageDiagnostics.test_permutation_is_distinct_from_collapse) ... ok
-test_score_leakage_and_final_participant_blocked (tests.test_coverage_diagnostics.CoverageDiagnostics.test_score_leakage_and_final_participant_blocked) ... ok
+test_alignment_update_preserves_original_model (test_alignment_comparator.AlignmentComparatorTests.test_alignment_update_preserves_original_model) ... ok
+test_covariance_formula_and_unequal_batch_sizes (test_alignment_comparator.AlignmentComparatorTests.test_covariance_formula_and_unequal_batch_sizes) ... ok
+test_finite_nonzero_gradients_both_domains (test_alignment_comparator.AlignmentComparatorTests.test_finite_nonzero_gradients_both_domains) ... ok
+test_identical_covariance_translation_and_permutation (test_alignment_comparator.AlignmentComparatorTests.test_identical_covariance_translation_and_permutation) ... ok
+test_refuses_degenerate_covariance (test_alignment_comparator.AlignmentComparatorTests.test_refuses_degenerate_covariance) ... ok
+test_source_only_has_no_target_dependency (test_alignment_comparator.AlignmentComparatorTests.test_source_only_has_no_target_dependency) ... ok
+test_whole_trial_overlap_and_final_access_rejected (test_alignment_comparator.AlignmentComparatorTests.test_whole_trial_overlap_and_final_access_rejected) ... ok
+test_cached_manifest_when_available (test_final_coverage.FinalCoverage.test_cached_manifest_when_available) ... skipped 'Optional integration check requires the GRABMyo final cache'
+test_calibration_session_mismatch_rejected (test_final_coverage.FinalCoverage.test_calibration_session_mismatch_rejected) ... ok
+test_scoring_class_imbalance_rejected (test_final_coverage.FinalCoverage.test_scoring_class_imbalance_rejected) ... ok
+test_scoring_leakage_rejected (test_final_coverage.FinalCoverage.test_scoring_leakage_rejected) ... ok
+test_source_session_mismatch_rejected (test_final_coverage.FinalCoverage.test_source_session_mismatch_rejected) ... ok
+test_valid_frozen_roles (test_final_coverage.FinalCoverage.test_valid_frozen_roles) ... ok
+test_wrong_cohort_rejected (test_final_coverage.FinalCoverage.test_wrong_cohort_rejected) ... ok
+test_base_unchanged_and_seed_reproducibility (test_decisive_calibration.DecisiveCalibration.test_base_unchanged_and_seed_reproducibility) ... ok
+test_collapse_metrics (test_decisive_calibration.DecisiveCalibration.test_collapse_metrics) ... ok
+test_matched_rank_recording_budget_and_gesture_balance (test_decisive_calibration.DecisiveCalibration.test_matched_rank_recording_budget_and_gesture_balance) ... ok
+test_known_shared_gain_rotation (test_rotation_coverage.RotationCoverage.test_known_shared_gain_rotation) ... ok
+test_proportional_templates_ambiguous (test_rotation_coverage.RotationCoverage.test_proportional_templates_ambiguous) ... ok
+test_selection_invariant_to_gesture_scale (test_rotation_coverage.RotationCoverage.test_selection_invariant_to_gesture_scale) ... ok
+test_budget_and_nonoverlapping_windows (test_coverage_diagnostics.CoverageDiagnostics.test_budget_and_nonoverlapping_windows) ... ok
+test_collapse_has_perfect_calibrated_recall_but_low_precision (test_coverage_diagnostics.CoverageDiagnostics.test_collapse_has_perfect_calibrated_recall_but_low_precision) ... ok
+test_permutation_is_distinct_from_collapse (test_coverage_diagnostics.CoverageDiagnostics.test_permutation_is_distinct_from_collapse) ... ok
+test_score_leakage_and_final_participant_blocked (test_coverage_diagnostics.CoverageDiagnostics.test_score_leakage_and_final_participant_blocked) ... ok
 
 ----------------------------------------------------------------------
-Ran 13 tests in 1.588s
+Ran 24 tests in 0.791s
 
-OK
+OK (skipped=1)

@@ -27,7 +27,7 @@ Next: train the shared encoder on the separate 20-person training group, then co
 
 Eight public-data tests and three neural risk tests passed. Separate readback verification rebuilt raw features/scaling, checked actual training/calibration/scoring access, regenerated predictions from saved models, and recomputed metrics. Each method family has 14 models and 33,320 saved scoring predictions, including repeated scoring across budgets. No clinical or live-control validation was performed.
 
-![Per-participant development curves](research/runs/20260906_grabmyo_pilot_report_v1/calibration.png)
+![Per-participant development curves](runs/20260906_grabmyo_pilot_report_v1/calibration.png)
 
-- [Classical run](research/runs/20260906_grabmyo_classical_pilot_v1)
-- [Neural run](research/runs/20260906_grabmyo_neural_pilot_v1)
+- [Classical run](runs/20260906_grabmyo_classical_pilot_v1)
+- [Neural run](runs/20260906_grabmyo_neural_pilot_v1)
