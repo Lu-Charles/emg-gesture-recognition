@@ -69,7 +69,7 @@ Run experiment commands as modules from this directory, for example `python -m s
 
 ## Data and experiment provenance
 
-Comparator records use September 23, 2026 UTC, corresponding to September 22 evening in America/Los_Angeles. The inspected JSON execution timestamps precede their containing commits. GitHub repository creation and upload times describe separate events. See [PROVENANCE.md](PROVENANCE.md) for the scope of the date and checksum checks.
+See [PROVENANCE.md](PROVENANCE.md) for protocol, manuscript, and verification details.
 
 - GRABMyo 1.1.0: <https://physionet.org/content/grabmyo/1.1.0/>.
 - SeNic, pinned revision: <https://github.com/BoZhuBo/SeNic/tree/a4c12f7daab28a80d557677ae8dbcef0d7871ba2>.
