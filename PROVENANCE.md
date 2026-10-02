@@ -2,7 +2,7 @@
 
 ## Protocol and manuscript
 
-The protocol records June 25, 2026 as its finalization date. The current protocol has SHA-256 `3545c2f35f02e056bd8a2a9ee65f10ca9f0547f58f7f557728f22b4b0cf74d9c`. The final non-copy manuscript and supplementary document are maintained separately from this code repository. The numerical analysis supplement is included. The manuscript describes comparisons as protocol-defined and uses the same June 25, 2026 finalization date.
+The protocol records June 25, 2026 as its finalization date. The current protocol has SHA-256 `3545c2f35f02e056bd8a2a9ee65f10ca9f0547f58f7f557728f22b4b0cf74d9c`. The final non-copy manuscript and supplementary document are maintained separately from this code repository. The numerical analysis supplement is included.
 
 ## Verification scope
 
